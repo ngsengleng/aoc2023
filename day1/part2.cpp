@@ -1,6 +1,29 @@
 #include "parts.h"
 
 class Part2 {
+    private:
+        bool hasKey(const std::unordered_map<std::string, std::string>& hashmap, std::string s) {
+            return hashmap.find(s) != hashmap.end();
+        }
+
+        std::string getNumber(std::string& s,
+                              int idx,
+                              std::unordered_map<std::string, std::string>& hashmap) {
+            std::string substr = s.substr(idx, 3); // one, two, six
+            if (hasKey(hashmap, substr)) {
+                return hashmap[substr];
+            }
+            substr = s.substr(idx, 4); // four, five, nine
+            if (hasKey(hashmap, substr)) {
+                return hashmap[substr];
+            }
+            substr = s.substr(idx, 5); // three, seven, eight
+            if (hasKey(hashmap, substr)) {
+                return hashmap[substr];
+            }
+            return "";
+        }
+
     public:
         int solve(std::fstream &f) {
             int sum = 0;
@@ -8,17 +31,6 @@ class Part2 {
                 return sum;
             }
 
-//            std::unordered_map<std::string, std::string> numbers = {
-//                    {"one", "1"},
-//                    {"two", "2"},
-//                    {"three", "3"},
-//                    {"four", "4"},
-//                    {"five", "5"},
-//                    {"six", "6"},
-//                    {"seven", "7"},
-//                    {"eight", "8"},
-//                    {"nine", "9"},
-//            };
             std::unordered_map<std::string, std::string> numbers;
             numbers["one"] = "1";
             numbers["two"] = "2";
@@ -50,21 +62,12 @@ class Part2 {
                         break;
                     }
                     if (firstLetters.find(c) != firstLetters.end()) {
-                        std::string substr = s.substr(i, 3); // one, two, six
-                        if (numbers.find(substr) != numbers.end()) {
-                            number += numbers[substr];
-                            break;
+                        std::string digit = getNumber(s, i, numbers);
+                        if (digit.empty()) {
+                            continue;
                         }
-                        substr = s.substr(i, 4); // four, five, nine
-                        if (numbers.find(substr) != numbers.end()) {
-                            number += numbers[substr];
-                            break;
-                        }
-                        substr = s.substr(i, 5); // three, seven, eight
-                        if (numbers.find(substr) != numbers.end()) {
-                            number += numbers[substr];
-                            break;
-                        }
+                        number += digit;
+                        break;
                     }
                 }
 
@@ -75,21 +78,12 @@ class Part2 {
                         break;
                     }
                     if (firstLetters.find(c) != firstLetters.end()) {
-                        std::string substr = s.substr(i, 3); // one, two, six
-                        if (numbers.find(substr) != numbers.end()) {
-                            number += numbers[substr];
-                            break;
+                        std::string digit = getNumber(s, i, numbers);
+                        if (digit.empty()) {
+                            continue;
                         }
-                        substr = s.substr(i, 4); // four, five, nine
-                        if (numbers.find(substr) != numbers.end()) {
-                            number += numbers[substr];
-                            break;
-                        }
-                        substr = s.substr(i, 5); // three, seven, eight
-                        if (numbers.find(substr) != numbers.end()) {
-                            number += numbers[substr];
-                            break;
-                        }
+                        number += digit;
+                        break;
                     }
                 }
                 if (number.empty()) {
