@@ -1,20 +1,5 @@
 #include "Solver.h"
 
-std::vector<int> Solver::split(const std::string& s, const std::string& delimiter) {
-    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-    std::string token;
-    std::vector<int> res;
-
-    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos) {
-        token = s.substr (pos_start, pos_end - pos_start);
-        pos_start = pos_end + delim_len;
-        res.push_back (std::stoi(token));
-    }
-
-    res.push_back (std::stoi(s.substr (pos_start)));
-    return res;
-}
-
 Solver::DirectionType Solver::intToDirection(const size_t& i) {
     if (i == 0) return Left;
     if (i == 1) return Up;
@@ -28,11 +13,6 @@ Solver::DirectionType Solver::intToDirection(const size_t& i) {
 
 std::string Solver::coordinateToString(const Coordinate& c) {
     return std::to_string(c.first) + ',' + std::to_string(c.second);
-}
-
-Solver::Coordinate Solver::StringToCoord(const std::string& s) {
-    std::vector<int> numbers = split(s, ",");
-    return std::make_pair(numbers[0], numbers[1]);
 }
 
 bool Solver::withinBoundary(const int& x, const size_t& boundary) {

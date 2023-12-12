@@ -22,8 +22,6 @@ enum DirectionType {
 
 static DirectionType intToDirection(const size_t& i);
 static std::string coordinateToString(const Coordinate& c);
-static Coordinate StringToCoord(const std::string& s);
-static std::vector<int> split(const std::string& s, const std::string& delimiter);
 static bool withinBoundary(const int& x, const size_t& boundary);
 static bool isConsecutivePipe(const char& leftPipe, const char& rightPipe);
 static bool isOppositeDirection(const char& leftPipe, const char& rightPipe);
